@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件上传下载示例</title>
+</head>
+
+<body>
+<input type="file" id="fileInput">
+<button onclick="uploadFile()">上传文件</button>
+<a href="#" onclick="downloadFile()">下载文件</a>
+
+<script>
+    function uploadFile() {
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+        if (!file) {
+            alert('请选择要上传的文件');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        fetch('http://localhost:8080/upload', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                alert('文件上传成功！');
+            })
+            .catch(error => {
+                console.error('文件上传失败：', error);
+                alert('文件上传失败！');
+            });
+    }
+
+    function downloadFile() {
+        fetch('http://localhost:8080/download')
+            //.then(response => {...})部分是一个Promise链的一部分，当fetch请求成功完成时，会执行其中的回调函数。
+            // 在这个回调函数中，首先检查响应是否成功（通过检查response.ok属性）。
+            // 如果响应不成功（例如，HTTP状态码不是2xx），则抛出一个错误。否则，将响应体转换为Blob对象（通过调用response.blob()方法）。
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('下载文件失败');
+                }
+                return response.blob();
+            })
+            //.then(blob => {...})部分是另一个Promise链的一部分，
+            // 当上一个Promise成功解析后执行。在这个回调函数中，首先创建一个指向Blob对象的URL（通过调用window.URL.createObjectURL(blob)方法）。
+            // 然后，创建一个新的<a>元素，将其href属性设置为刚刚创建的URL，并将download属性设置为要下载的文件名（这里是'downloaded_file'）。
+            // 接着，将这个<a>元素添加到文档的body中，触发点击事件以开始下载，然后移除该元素。最后，撤销之前创建的URL（通过调用window.URL.revokeObjectURL(url)方法）。
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                //设置下载后的文件名字
+                a.download = 'downloaded_file';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('文件下载失败：', error);
+                alert('文件下载失败！');
+            });
+    }
+</script>
+</body>
+
+</html>

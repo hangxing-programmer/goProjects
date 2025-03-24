@@ -1,0 +1,40 @@
+发生异常时间====>2024-09-29 13:47:29
+runtime error: integer divide by zero
+stacktrace from panic:goroutine 7 [running]:
+runtime/debug.Stack()
+	D:/dev/jdk/go1.23.0/src/runtime/debug/stack.go:26 +0x5e
+abc/src/utils.Recover.func1()
+	D:/Cyrd/goProjects/src/utils/logger.go:130 +0x279
+panic({0x141b320?, 0x19b9d80?})
+	D:/dev/jdk/go1.23.0/src/runtime/panic.go:785 +0x132
+abc/controllers.UserController.LoggerTest({}, 0xc0002110fa?)
+	D:/Cyrd/goProjects/controllers/user.go:94 +0x30
+github.com/gin-gonic/gin.(*Context).Next(...)
+	C:/Users/13070/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+abc/src/utils.Recover(0xc0000d4300)
+	D:/Cyrd/goProjects/src/utils/logger.go:141 +0x5c
+github.com/gin-gonic/gin.(*Context).Next(...)
+	C:/Users/13070/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1(0xc0000d4300)
+	C:/Users/13070/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249 +0xe5
+github.com/gin-gonic/gin.(*Context).Next(...)
+	C:/Users/13070/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1(0xc0000d4300)
+	C:/Users/13070/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102 +0x6f
+github.com/gin-gonic/gin.(*Context).Next(...)
+	C:/Users/13070/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.LoggerWithConfig.func1(0xc0000d4300)
+	C:/Users/13070/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/logger.go:249 +0xe5
+github.com/gin-gonic/gin.(*Context).Next(...)
+	C:/Users/13070/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc0000fa000, 0xc0000d4300)
+	C:/Users/13070/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:633 +0x892
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc0000fa000, {0x15bd380, 0xc0000cc1c0}, 0xc000238140)
+	C:/Users/13070/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589 +0x1b2
+net/http.serverHandler.ServeHTTP({0x15baf58?}, {0x15bd380?, 0xc0000cc1c0?}, 0x6?)
+	D:/dev/jdk/go1.23.0/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0001621b0, {0x15be270, 0xc0000f07e0})
+	D:/dev/jdk/go1.23.0/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	D:/dev/jdk/go1.23.0/src/net/http/server.go:3360 +0x485
+
