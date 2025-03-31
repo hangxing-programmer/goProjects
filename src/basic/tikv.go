@@ -64,3 +64,41 @@ func (ms *MetaStore) ExecuteTxn(fn func(txn *transaction.KVTxn) error) error {
 	}
 	return nil
 }
+
+type Obj struct {
+	Uuid string `json:"uuid"`
+}
+type LockMeta struct {
+	LockTime    int64 `json:"lockTime"`
+	MaxDuration int64 `json:"maxDuration"`
+}
+
+func ExpireTimeTest() {
+	//metaStore, _ := basic.NewMetaStore("10.0.11.33:2379")
+	//_ = metaStore.ExecuteTxn(func(txn *transaction.KVTxn) error {
+	//	//txn.Delete([]byte("OS/T03/1010121741588318174/Data/Lock/b3b5a095-3c52-4b15-8b4e-f4486e0a1a58"))
+	//	ctx := context.Background()
+	//	get, _ := txn.Get(ctx, []byte("OS/T03/1010121741588318174/Data/LS/1-4GB.zip"))
+	//	var obj Obj
+	//	err := json.Unmarshal(get, &obj)
+	//	if err != nil {
+	//		fmt.Println(err)
+	//		return err
+	//	}
+	//	lookMeta := &LockMeta{
+	//		LockTime:    time.Now().UnixMilli(),
+	//		MaxDuration: 100 * time.Minute.Milliseconds(),
+	//	}
+	//	bytes, err := json.Marshal(lookMeta)
+	//	if err != nil {
+	//		fmt.Println("json marshal err:", err)
+	//		return err
+	//	}
+	//	err = txn.Set([]byte("OS/T03/1010121741588318174/Data/Lock/"+obj.Uuid), bytes)
+	//	if err != nil {
+	//		fmt.Println("set failed, err:", err)
+	//		return err
+	//	}
+	//	return nil
+	//})
+}
