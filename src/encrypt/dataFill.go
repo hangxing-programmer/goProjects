@@ -10,7 +10,7 @@ import (
 	"io"
 )
 
-func main() {
+func dataFill() {
 	// 原始数据(不一定是16字节的倍数)
 	originalData := []byte("test")
 
