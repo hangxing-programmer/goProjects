@@ -56,14 +56,6 @@ func pkcs7Unpad(data []byte) ([]byte, error) {
 	}
 
 	padding := int(data[length-1])
-	if padding < 1 || padding > aes.BlockSize {
-		return nil, errors.New("pkcs7: 填充大小无效")
-	}
-
-	if length < padding {
-		return nil, errors.New("pkcs7: 填充大小大于数据长度")
-	}
-
 	// 检查所有填充字节是否正确
 	for i := 0; i < padding; i++ {
 		if data[length-padding+i] != byte(padding) {
