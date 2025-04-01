@@ -3,17 +3,45 @@ package basic
 import (
 	"bufio"
 	"fmt"
+	"io/fs"
 	"os"
+	"path/filepath"
 )
 
-//记录文件内数字，字母，空格，其他的个数
-//type nums struct {
-//	nums    int
-//	letters int
-//	space   int
-//	other   int
-//}
+// 记录文件内数字，字母，空格，其他的个数
+//
+//	type nums struct {
+//		nums    int
+//		letters int
+//		space   int
+//		other   int
+//	}
+func listFiles() {
+	root := "D:\\vol2"
+	open, _ := os.Open(root)
+	entries, _ := open.ReadDir(-1)
+	for _, entry := range entries {
+		if entry.IsDir() {
+			fmt.Println(root + "\\" + entry.Name())
+			err := filepath.WalkDir(root+"\\"+entry.Name(), func(path string, dirEntry fs.DirEntry, err error) error {
+				if err != nil {
+					fmt.Printf("访问 %q 失败: %v\n", path, err)
+					return nil // 跳过错误，继续遍历
+				}
+				if !dirEntry.IsDir() { // 只处理文件，不处理目录
+					fmt.Println(path) // 直接输出完整路径
+				}
+				return nil
+			})
 
+			if err != nil {
+				fmt.Printf("遍历目录失败: %v\n", err)
+			}
+		}
+		fmt.Println(root + "\\" + entry.Name())
+
+	}
+}
 func readFile() {
 
 	filePath := "D:\\userTest\\test01.txt"
