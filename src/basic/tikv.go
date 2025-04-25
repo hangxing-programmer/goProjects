@@ -102,3 +102,29 @@ func ExpireTimeTest() {
 	//	return nil
 	//})
 }
+
+//func get(name string) string {
+//	var result string
+//	_ = ExecuteTxn(func(txn *transaction.KVTxn) error {
+//		//name := "OS/T02/Conf/IAM/policies/POLICY-244832646717280951/policy.json"
+//		bytes, err := txn.Get(context.Background(), []byte(name))
+//		fmt.Println(string(bytes))
+//		result = string(bytes)
+//		return err
+//	})
+//	return result
+//}
+//
+//func set(name, value string) {
+//	_ = ExecuteTxn(func(txn *transaction.KVTxn) error {
+//		err := txn.Set([]byte(name), []byte(value))
+//		return err
+//	})
+//}
+//
+//func del(name string) {
+//	_ = ExecuteTxn(func(txn *transaction.KVTxn) error {
+//		err := txn.Delete([]byte(name))
+//		return err
+//	})
+//}

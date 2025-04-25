@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package  protocol;
+
+option go_package = "/rfa-proto";
+
+message NullMsg {}
+
+message ResponseResult {
+  int32 status = 1;
+  string error = 2;
+}
+
+message DiskVS {
+  string    DiskVS = 1;
+}
+
+message DataChunk {
+  int32     SizeInBytes = 1;
+  bytes     Content = 2;
+  bool      IsLastChunk = 3;
+}
+
+message HandleResult {
+  int64 handled = 1;
+}
+
+message ExistsResult {
+  bool Exists = 1;
+}
+
+message DataWriteRequest {
+  string VSID = 1;
+  string LocationID = 2;
+  int64  SizeTotalBytes = 3;
+  DataChunk Chunk = 4;
+}
+
+message DataDeleteRequest {
+  string VSID = 1;
+  string LocationID = 2;
+}
+
+message DataReadRequest {
+  string VSID = 1;
+  string LocationID = 2;
+  int64 Offset = 3;
+  int64 Length = 4;
+}
+
+message DataExistRequest {
+  string VSID = 1;
+  string LocationID = 2;
+}
+
+message SpaceInfos {
+  repeated SpaceInfo SpaceInfos = 1;
+}
+
+message SpaceInfo {
+  string    name = 1;
+  uint64    All = 2;
+  uint64    Used = 3;
+  uint64    Free = 4;
+}
+
+service FileService {
+  rpc Shutdown(NullMsg) returns(ResponseResult) {}
+  rpc Exists(DataExistRequest) returns (ExistsResult) {}
+  rpc ReadData(DataReadRequest) returns (stream DataChunk) {}
+  rpc DeleteData(DataDeleteRequest) returns (HandleResult) {}
+  rpc WriteData(stream DataWriteRequest) returns (HandleResult) {}
+  rpc GetEntireSpaceInfo(NullMsg) returns (SpaceInfo) {}
+  rpc GetAnySpaceInfo(DiskVS) returns (SpaceInfos) {}
+}
