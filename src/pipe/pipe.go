@@ -33,7 +33,7 @@ package basic
 //		}
 //}
 //
-//func main() {
+//func mainFunc() {
 //	// 创建 PipeReader 和 PipeWriter
 //	reader, writer := WaitPipe()
 //	go func() {

@@ -128,3 +128,16 @@ func ExpireTimeTest() {
 //		return err
 //	})
 //}
+
+// tikv时间戳转换
+func timeTest() {
+	now := time.Now()
+	physical := uint64(now.UnixMilli()) // 当前时间的毫秒级时间戳
+	startTS := uint64(physical) << 18   // 左移 18 位（逻辑计数默认为 0）
+	fmt.Printf("Current StartTS: %d\n", startTS)
+
+	// 反向解析验证
+	physical = startTS >> 18
+	t := time.UnixMilli(int64(physical))
+	fmt.Printf("Parsed Time: %s\n", t.Format("2006-01-02 15:04:05"))
+}
